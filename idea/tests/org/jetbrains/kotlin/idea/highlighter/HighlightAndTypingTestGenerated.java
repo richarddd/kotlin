@@ -29,8 +29,23 @@ public class HighlightAndTypingTestGenerated extends AbstractHighlightAndTypingT
         KotlinTestUtils.assertAllTestsPresentByMetadata(this.getClass(), new File("idea/testData/highlighter/typing"), Pattern.compile("^([\\w\\-_]+)\\.kt$"), TargetBackend.ANY, true);
     }
 
-    @TestMetadata("PartialAnalysis1A.kt")
-    public void testPartialAnalysis1A() throws Exception {
-        runTest("idea/testData/highlighter/typing/PartialAnalysis1A.kt");
+    @TestMetadata("PartialAnalysis1.kt")
+    public void testPartialAnalysis1() throws Exception {
+        runTest("idea/testData/highlighter/typing/PartialAnalysis1.kt");
+    }
+
+    @TestMetadata("PartialAnalysis1Comment.kt")
+    public void testPartialAnalysis1Comment() throws Exception {
+        runTest("idea/testData/highlighter/typing/PartialAnalysis1Comment.kt");
+    }
+
+    @TestMetadata("PartialAnalysis1Error.kt")
+    public void testPartialAnalysis1Error() throws Exception {
+        runTest("idea/testData/highlighter/typing/PartialAnalysis1Error.kt");
+    }
+
+    @TestMetadata("PartialAnalysis1Unused.kt")
+    public void testPartialAnalysis1Unused() throws Exception {
+        runTest("idea/testData/highlighter/typing/PartialAnalysis1Unused.kt");
     }
 }

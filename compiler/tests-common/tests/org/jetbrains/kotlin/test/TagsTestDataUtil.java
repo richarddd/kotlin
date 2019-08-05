@@ -184,7 +184,7 @@ public class TagsTestDataUtil {
             if (isStart) {
                 if (highlightInfo.getDescription() != null) {
                     return String.format("descr=\"%s\" textAttributesKey=\"%s\"",
-                                         highlightInfo.getDescription(),
+                                         highlightInfo.getDescription().replaceAll("\"", "\\\\\""),
                                          highlightInfo.forcedTextAttributesKey);
                 }
                 else {

@@ -22,8 +22,8 @@ class PartialAnalysis1A {
     fun someFun4(count: Int) : Map<Int, String> {
         val map = mutableMapOf<Int, String>()
         (1 .. count).forEach { v ->
-        map[v] = v.toString()
-    }
+            map[v] = v.toString()
+        }
         return map.toMap()
     }
 }
@@ -48,8 +48,8 @@ class PartialAnalysis1B {
     fun someFun4(count: Int) : Map<Int, String> {
         val map = mutableMapOf<Int, String>()
         (1 .. count).forEach { v ->
-        map[v] = v.toString()
-    }
+            map[v] = v.toString()
+        }
         return map.toMap()
     }
 
@@ -57,8 +57,8 @@ class PartialAnalysis1B {
         val foo = 1 + 10<caret>
         val map = mutableMapOf<Int, String>()
         (1 .. count).forEach { v ->
-        map[v] = v.toString()
-    }
+            map[v] = v.toString()
+        }
         return map.toMap()
     }
 

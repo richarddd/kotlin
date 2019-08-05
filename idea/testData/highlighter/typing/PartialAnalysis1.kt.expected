@@ -4,7 +4,7 @@
 
 class <info descr="null" textAttributesKey="KOTLIN_CLASS">PartialAnalysis1A</info> {
     fun <info descr="null" textAttributesKey="KOTLIN_FUNCTION_DECLARATION">someFun1</info>(<info descr="null" textAttributesKey="KOTLIN_PARAMETER">count</info>: <info descr="null" textAttributesKey="KOTLIN_CLASS">Int</info>, <info descr="null" textAttributesKey="KOTLIN_PARAMETER">separator</info>: <info descr="null" textAttributesKey="KOTLIN_CLASS">String</info> = ", ") : <info descr="null" textAttributesKey="KOTLIN_CLASS">String</info> {
-        return (1..<info descr="null" textAttributesKey="KOTLIN_PARAMETER">count</info>).<info descr="null" textAttributesKey="KOTLIN_EXTENSION_FUNCTION_CALL">toList</info>().<info descr="null" textAttributesKey="KOTLIN_EXTENSION_FUNCTION_CALL">joinToString</info>(<info descr="null" textAttributesKey="KOTLIN_PARAMETER">separator</info>) { <info descr="null" textAttributesKey="KOTLIN_PARAMETER"><info descr="Automatically declared based on the expected type" textAttributesKey="KOTLIN_CLOSURE_DEFAULT_PARAMETER">it</info></info>.<info descr="null" textAttributesKey="KOTLIN_FUNCTION_CALL">toString</info>() }
+        return (1..<info descr="null" textAttributesKey="KOTLIN_PARAMETER">count</info>).<info descr="null" textAttributesKey="KOTLIN_EXTENSION_FUNCTION_CALL">toList</info>().<info descr="null" textAttributesKey="KOTLIN_EXTENSION_FUNCTION_CALL">joinToString</info>(<info descr="null" textAttributesKey="KOTLIN_PARAMETER">separator</info>) { <info descr="null" textAttributesKey="KOTLIN_PARAMETER">it</info>.<info descr="null" textAttributesKey="KOTLIN_FUNCTION_CALL">toString</info>() }
     }
 
     fun <info descr="null" textAttributesKey="KOTLIN_FUNCTION_DECLARATION">someFun1</info>(<info descr="null" textAttributesKey="KOTLIN_PARAMETER">count</info>: <info descr="null" textAttributesKey="KOTLIN_CLASS">Int</info>) : <info descr="null" textAttributesKey="KOTLIN_CLASS">String</info> {
@@ -22,15 +22,15 @@ class <info descr="null" textAttributesKey="KOTLIN_CLASS">PartialAnalysis1A</inf
     fun <info descr="null" textAttributesKey="KOTLIN_FUNCTION_DECLARATION">someFun4</info>(<info descr="null" textAttributesKey="KOTLIN_PARAMETER">count</info>: <info descr="null" textAttributesKey="KOTLIN_CLASS">Int</info>) : <info descr="null" textAttributesKey="KOTLIN_TRAIT">Map</info><<info descr="null" textAttributesKey="KOTLIN_CLASS">Int</info>, <info descr="null" textAttributesKey="KOTLIN_CLASS">String</info>> {
         val <info descr="null" textAttributesKey="KOTLIN_LOCAL_VARIABLE">map</info> = <info descr="null" textAttributesKey="KOTLIN_PACKAGE_FUNCTION_CALL">mutableMapOf</info><<info descr="null" textAttributesKey="KOTLIN_CLASS">Int</info>, <info descr="null" textAttributesKey="KOTLIN_CLASS">String</info>>()
         (1 .. <info descr="null" textAttributesKey="KOTLIN_PARAMETER">count</info>).<info descr="null" textAttributesKey="KOTLIN_EXTENSION_FUNCTION_CALL">forEach</info> { <info descr="null" textAttributesKey="KOTLIN_PARAMETER">v</info> ->
-        <info descr="null" textAttributesKey="KOTLIN_LOCAL_VARIABLE">map</info>[<info descr="null" textAttributesKey="KOTLIN_PARAMETER">v</info>] = <info descr="null" textAttributesKey="KOTLIN_PARAMETER">v</info>.<info descr="null" textAttributesKey="KOTLIN_FUNCTION_CALL">toString</info>()
-    }
+            <info descr="null" textAttributesKey="KOTLIN_LOCAL_VARIABLE">map</info>[<info descr="null" textAttributesKey="KOTLIN_PARAMETER">v</info>] = <info descr="null" textAttributesKey="KOTLIN_PARAMETER">v</info>.<info descr="null" textAttributesKey="KOTLIN_FUNCTION_CALL">toString</info>()
+        }
         return <info descr="null" textAttributesKey="KOTLIN_LOCAL_VARIABLE">map</info>.<info descr="null" textAttributesKey="KOTLIN_EXTENSION_FUNCTION_CALL">toMap</info>()
     }
 }
 
 class <info descr="null" textAttributesKey="KOTLIN_CLASS">PartialAnalysis1B</info> {
     fun <info descr="null" textAttributesKey="KOTLIN_FUNCTION_DECLARATION">someFun1</info>(<info descr="null" textAttributesKey="KOTLIN_PARAMETER">count</info>: <info descr="null" textAttributesKey="KOTLIN_CLASS">Int</info>, <info descr="null" textAttributesKey="KOTLIN_PARAMETER">separator</info>: <info descr="null" textAttributesKey="KOTLIN_CLASS">String</info> = ", ") : <info descr="null" textAttributesKey="KOTLIN_CLASS">String</info> {
-        return (1..<info descr="null" textAttributesKey="KOTLIN_PARAMETER">count</info>).<info descr="null" textAttributesKey="KOTLIN_EXTENSION_FUNCTION_CALL">toList</info>().<info descr="null" textAttributesKey="KOTLIN_EXTENSION_FUNCTION_CALL">joinToString</info>(<info descr="null" textAttributesKey="KOTLIN_PARAMETER">separator</info>) { <info descr="null" textAttributesKey="KOTLIN_PARAMETER"><info descr="Automatically declared based on the expected type" textAttributesKey="KOTLIN_CLOSURE_DEFAULT_PARAMETER">it</info></info>.<info descr="null" textAttributesKey="KOTLIN_FUNCTION_CALL">toString</info>() }
+        return (1..<info descr="null" textAttributesKey="KOTLIN_PARAMETER">count</info>).<info descr="null" textAttributesKey="KOTLIN_EXTENSION_FUNCTION_CALL">toList</info>().<info descr="null" textAttributesKey="KOTLIN_EXTENSION_FUNCTION_CALL">joinToString</info>(<info descr="null" textAttributesKey="KOTLIN_PARAMETER">separator</info>) { <info descr="null" textAttributesKey="KOTLIN_PARAMETER">it</info>.<info descr="null" textAttributesKey="KOTLIN_FUNCTION_CALL">toString</info>() }
     }
 
     fun <info descr="null" textAttributesKey="KOTLIN_FUNCTION_DECLARATION">someFun1</info>(<info descr="null" textAttributesKey="KOTLIN_PARAMETER">count</info>: <info descr="null" textAttributesKey="KOTLIN_CLASS">Int</info>) : <info descr="null" textAttributesKey="KOTLIN_CLASS">String</info> {
@@ -48,17 +48,17 @@ class <info descr="null" textAttributesKey="KOTLIN_CLASS">PartialAnalysis1B</inf
     fun <info descr="null" textAttributesKey="KOTLIN_FUNCTION_DECLARATION">someFun4</info>(<info descr="null" textAttributesKey="KOTLIN_PARAMETER">count</info>: <info descr="null" textAttributesKey="KOTLIN_CLASS">Int</info>) : <info descr="null" textAttributesKey="KOTLIN_TRAIT">Map</info><<info descr="null" textAttributesKey="KOTLIN_CLASS">Int</info>, <info descr="null" textAttributesKey="KOTLIN_CLASS">String</info>> {
         val <info descr="null" textAttributesKey="KOTLIN_LOCAL_VARIABLE">map</info> = <info descr="null" textAttributesKey="KOTLIN_PACKAGE_FUNCTION_CALL">mutableMapOf</info><<info descr="null" textAttributesKey="KOTLIN_CLASS">Int</info>, <info descr="null" textAttributesKey="KOTLIN_CLASS">String</info>>()
         (1 .. <info descr="null" textAttributesKey="KOTLIN_PARAMETER">count</info>).<info descr="null" textAttributesKey="KOTLIN_EXTENSION_FUNCTION_CALL">forEach</info> { <info descr="null" textAttributesKey="KOTLIN_PARAMETER">v</info> ->
-        <info descr="null" textAttributesKey="KOTLIN_LOCAL_VARIABLE">map</info>[<info descr="null" textAttributesKey="KOTLIN_PARAMETER">v</info>] = <info descr="null" textAttributesKey="KOTLIN_PARAMETER">v</info>.<info descr="null" textAttributesKey="KOTLIN_FUNCTION_CALL">toString</info>()
-    }
+            <info descr="null" textAttributesKey="KOTLIN_LOCAL_VARIABLE">map</info>[<info descr="null" textAttributesKey="KOTLIN_PARAMETER">v</info>] = <info descr="null" textAttributesKey="KOTLIN_PARAMETER">v</info>.<info descr="null" textAttributesKey="KOTLIN_FUNCTION_CALL">toString</info>()
+        }
         return <info descr="null" textAttributesKey="KOTLIN_LOCAL_VARIABLE">map</info>.<info descr="null" textAttributesKey="KOTLIN_EXTENSION_FUNCTION_CALL">toMap</info>()
     }
 
     fun <info descr="null" textAttributesKey="KOTLIN_FUNCTION_DECLARATION">someFunN</info>(<info descr="null" textAttributesKey="KOTLIN_PARAMETER">count</info>: <info descr="null" textAttributesKey="KOTLIN_CLASS">Int</info>) : <info descr="null" textAttributesKey="KOTLIN_TRAIT">Map</info><<info descr="null" textAttributesKey="KOTLIN_CLASS">Int</info>, <info descr="null" textAttributesKey="KOTLIN_CLASS">String</info>> {
-        val <warning descr="[UNUSED_VARIABLE] Variable 'foo' is never used" textAttributesKey="NOT_USED_ELEMENT_ATTRIBUTES"><info descr="null" textAttributesKey="KOTLIN_LOCAL_VARIABLE">foo</info></warning> = 1 <caret>
+        val <warning descr="[UNUSED_VARIABLE] Variable 'foo' is never used" textAttributesKey="NOT_USED_ELEMENT_ATTRIBUTES"><info descr="null" textAttributesKey="KOTLIN_LOCAL_VARIABLE">foo</info></warning> = 1 + 10<caret>
         val <info descr="null" textAttributesKey="KOTLIN_LOCAL_VARIABLE">map</info> = <info descr="null" textAttributesKey="KOTLIN_PACKAGE_FUNCTION_CALL">mutableMapOf</info><<info descr="null" textAttributesKey="KOTLIN_CLASS">Int</info>, <info descr="null" textAttributesKey="KOTLIN_CLASS">String</info>>()
         (1 .. <info descr="null" textAttributesKey="KOTLIN_PARAMETER">count</info>).<info descr="null" textAttributesKey="KOTLIN_EXTENSION_FUNCTION_CALL">forEach</info> { <info descr="null" textAttributesKey="KOTLIN_PARAMETER">v</info> ->
-        <info descr="null" textAttributesKey="KOTLIN_LOCAL_VARIABLE">map</info>[<info descr="null" textAttributesKey="KOTLIN_PARAMETER">v</info>] = <info descr="null" textAttributesKey="KOTLIN_PARAMETER">v</info>.<info descr="null" textAttributesKey="KOTLIN_FUNCTION_CALL">toString</info>()
-    }
+            <info descr="null" textAttributesKey="KOTLIN_LOCAL_VARIABLE">map</info>[<info descr="null" textAttributesKey="KOTLIN_PARAMETER">v</info>] = <info descr="null" textAttributesKey="KOTLIN_PARAMETER">v</info>.<info descr="null" textAttributesKey="KOTLIN_FUNCTION_CALL">toString</info>()
+        }
         return <info descr="null" textAttributesKey="KOTLIN_LOCAL_VARIABLE">map</info>.<info descr="null" textAttributesKey="KOTLIN_EXTENSION_FUNCTION_CALL">toMap</info>()
     }
 
