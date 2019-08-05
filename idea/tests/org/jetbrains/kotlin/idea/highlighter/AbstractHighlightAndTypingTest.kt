@@ -21,19 +21,13 @@ import com.intellij.openapi.Disposable
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.Disposer
 import com.intellij.openapi.util.io.FileUtil
-import com.intellij.openapi.vfs.VirtualFileFilter
 import com.intellij.profile.codeInspection.InspectionProjectProfileManager
 import com.intellij.profile.codeInspection.ProjectInspectionProfileManager
 import com.intellij.psi.PsiDocumentManager
 import com.intellij.psi.PsiFile
-import com.intellij.psi.PsiManager
-import com.intellij.psi.impl.PsiManagerEx
 import com.intellij.psi.impl.search.IndexPatternBuilder
 import com.intellij.psi.impl.source.PsiFileImpl
 import com.intellij.psi.xml.XmlFileNSInfoProvider
-import com.intellij.testFramework.EdtTestUtil
-import com.intellij.testFramework.fixtures.impl.CodeInsightTestFixtureImpl.ensureIndexesUpToDate
-import com.intellij.testFramework.propertyBased.MadTestingUtil
 import com.intellij.testFramework.runInEdtAndWait
 import com.intellij.util.ui.UIUtil
 import com.intellij.xml.XmlSchemaProvider
@@ -60,35 +54,6 @@ abstract class AbstractHighlightAndTypingTest : KotlinLightCodeInsightFixtureTes
 
     private val defaultCompletionType: CompletionType = CompletionType.BASIC
 
-    override fun setUp() {
-        super.setUp()
-
-
-        //enableAnnotatorsAndLoadDefinitions(myFixture.project)
-        //MadTestingUtil.enableAllInspections(project, project)
-
-        //val manager = InspectionProjectProfileManager.getInstance(project) as ProjectInspectionProfileManager
-//        val tools = manager.currentProfile.allTools.map { it.tool.shortName }.toList()
-//        val list: Any = tools.filter { it.contains("Unused") }.sorted().toList()
-//        println(tools)
-
-//        val disposable = project
-//        InspectionProfileImpl.INIT_INSPECTIONS = true
-//        val profile = InspectionProfileImpl("Default Highlight")
-//        profile.enableTool("UnusedSymbol", project)
-//
-//        disableInspection(project, profile, "HighlightVisitorInternal")
-//
-//        manager.addProfile(profile)
-//        val prev = manager.currentProfile
-//        manager.setCurrentProfile(profile)
-//        Disposer.register(disposable, Disposable {
-//            InspectionProfileImpl.INIT_INSPECTIONS = false
-//            manager.setCurrentProfile(prev)
-//            manager.deleteProfile(profile)
-//        })
-    }
-
     protected fun doTest(filePath: String) {
         val fileText = FileUtil.loadFile(File(filePath), true)
         val checkInfos = !InTextDirectivesUtils.isDirectiveDefined(fileText, NO_CHECK_INFOS_PREFIX)
@@ -111,11 +76,8 @@ abstract class AbstractHighlightAndTypingTest : KotlinLightCodeInsightFixtureTes
         val file = myFixture.configureByFile(filePath)
         myFixture.allowTreeAccessForAllFiles()
 
-        //checkHighlighting(file, expectedDuplicatedHighlighting, checkWarnings, checkInfos, checkWeakWarnings)
-
-        // check initial highlight - perform via separated file $filePath.initial as HighlightInfo could not be fully deserialized
-        val expectedInitialHighlightString = FileUtil.loadFile(File("$filePath.initial"), true)
-        assertEquals(expectedInitialHighlightString, highlightString(file, inspections))
+        // check initial highlight
+        checkHighlighting(file, inspections, expectedDuplicatedHighlighting, checkWarnings, checkInfos, checkWeakWarnings)
 
         val highlightStrings = mutableListOf<String>()
         // type and check plain result
@@ -141,6 +103,7 @@ abstract class AbstractHighlightAndTypingTest : KotlinLightCodeInsightFixtureTes
 
     private fun checkHighlighting(
         file: PsiFile,
+        inspections: List<String>,
         expectedDuplicatedHighlighting: Boolean,
         checkWarnings: Boolean,
         checkInfos: Boolean,
@@ -148,15 +111,17 @@ abstract class AbstractHighlightAndTypingTest : KotlinLightCodeInsightFixtureTes
     ) {
         withExpectedDuplicatedHighlighting(expectedDuplicatedHighlighting, Runnable {
             try {
-                myFixture.checkHighlighting(checkWarnings, checkInfos, checkWeakWarnings)
+                doWithAnnotations(inspections) {
+                    myFixture.checkHighlighting(checkWarnings, checkInfos, checkWeakWarnings)
+                }
             } catch (e: Throwable) {
-                reportActualHighlighting(file, e)
+                reportActualHighlighting(file, inspections, e)
             }
         })
     }
 
-    private fun reportActualHighlighting(file: PsiFile, e: Throwable) {
-        println(highlightString(file))
+    private fun reportActualHighlighting(file: PsiFile, inspections: List<String>, e: Throwable) {
+        println(highlightString(file, inspections))
         throw e
     }
 
@@ -182,10 +147,11 @@ abstract class AbstractHighlightAndTypingTest : KotlinLightCodeInsightFixtureTes
         }
     }
 
-    private fun highlightString(file: PsiFile, inspections: List<String> = emptyList()): String {
+    private fun highlightString(file: PsiFile, inspections: List<String>): String {
         commitAllDocuments()
 
-        val hardRefToFileElement = (file as PsiFileImpl).calcTreeElement()//to load text
+        val hardRefToFileElement = (file as PsiFileImpl).calcTreeElement()
+        assertNotNull("to load text", hardRefToFileElement)
 
         var highlights: List<HighlightInfo>? = null
         doWithAnnotations(inspections) {
@@ -227,13 +193,11 @@ abstract class AbstractHighlightAndTypingTest : KotlinLightCodeInsightFixtureTes
             enabledInspections: List<String>,
             disableInspections: List<String> = emptyList()
         ) {
-            //based
-            //MadTestingUtil.enableAllInspections(project, disposable)
+            //based MadTestingUtil.enableAllInspections(project, disposable)
 
             val manager = InspectionProjectProfileManager.getInstance(project) as ProjectInspectionProfileManager
             InspectionProfileImpl.INIT_INSPECTIONS = true
             val profile = InspectionProfileImpl("Default Highlight")
-            //profile.disableAllTools(project)
             for (enabledInspection in enabledInspections) {
                 profile.enableTool(enabledInspection, project)
             }
@@ -251,11 +215,7 @@ abstract class AbstractHighlightAndTypingTest : KotlinLightCodeInsightFixtureTes
                 manager.setCurrentProfile(prev)
                 manager.deleteProfile(profile)
             })
-
-            val tools = manager.currentProfile.allTools.filter { it.isEnabled }.map { it.tool.shortName }.toList()
-            println(tools)
         }
-
 
         fun enableAnnotatorsAndLoadDefinitions(project: Project) {
             InjectedLanguageManager.getInstance(project) // zillion of Dom Sem classes

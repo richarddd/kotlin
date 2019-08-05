@@ -182,10 +182,13 @@ public class TagsTestDataUtil {
         @Override
         public String getAttributesString() {
             if (isStart) {
-                if (highlightInfo.getDescription() != null) {
-                    return String.format("descr=\"%s\" textAttributesKey=\"%s\"",
-                                         highlightInfo.getDescription().replaceAll("\"", "\\\\\""),
-                                         highlightInfo.forcedTextAttributesKey);
+                String description = highlightInfo.getDescription();
+                if (description != null) {
+                    String descr = description.replaceAll("\"", "\\\\\"");
+                    if (highlightInfo.forcedTextAttributesKey != null) {
+                        return String.format("descr=\"%s\" textAttributesKey=\"%s\"", descr, highlightInfo.forcedTextAttributesKey);
+                    }
+                    return String.format("descr=\"%s\"", descr);
                 }
                 else {
                     return String.format("descr=\"null\" textAttributesKey=\"%s\"", highlightInfo.forcedTextAttributesKey);
