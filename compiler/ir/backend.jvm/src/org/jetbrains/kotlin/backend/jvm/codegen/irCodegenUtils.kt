@@ -107,13 +107,9 @@ val IrType.isExtensionFunctionType: Boolean
 
 fun writeInnerClass(innerClass: IrClass, typeMapper: IrTypeMapper, context: JvmBackendContext, v: ClassBuilder) {
     val outerClassInternalName = innerClass.parent.safeAs<IrClass>()?.let { typeMapper.classInternalName(it) }
-    /* TODO: So long as the type mapper works by descriptors, the internal name should be consistent with it. */
-    val outerClassInternalNameByDescriptor = innerClass.descriptor.containingDeclaration.safeAs<ClassDescriptor>()?.let {
-        typeMapper.kotlinTypeMapper.classInternalName(it)
-    }
     val innerName = innerClass.name.takeUnless { it.isSpecial }?.asString()
     val innerClassInternalName = typeMapper.classInternalName(innerClass)
-    v.visitInnerClass(innerClassInternalName, outerClassInternalNameByDescriptor, innerName, innerClass.calculateInnerClassAccessFlags(context))
+    v.visitInnerClass(innerClassInternalName, outerClassInternalName, innerName, innerClass.calculateInnerClassAccessFlags(context))
 }
 
 /* Borrowed with modifications from AsmUtil.java */
