@@ -27,7 +27,6 @@ import org.jetbrains.kotlin.ir.types.IrSimpleType
 import org.jetbrains.kotlin.ir.types.IrType
 import org.jetbrains.kotlin.ir.util.*
 import org.jetbrains.kotlin.load.java.JavaVisibilities
-import org.jetbrains.kotlin.load.kotlin.TypeMappingMode
 import org.jetbrains.kotlin.name.FqName
 import org.jetbrains.kotlin.name.Name
 import org.jetbrains.kotlin.resolve.DescriptorUtils
@@ -36,6 +35,7 @@ import org.jetbrains.kotlin.resolve.jvm.jvmSignature.JvmClassSignature
 import org.jetbrains.kotlin.resolve.jvm.jvmSignature.JvmMethodParameterKind
 import org.jetbrains.kotlin.resolve.jvm.jvmSignature.JvmMethodSignature
 import org.jetbrains.kotlin.resolve.source.PsiSourceElement
+import org.jetbrains.kotlin.utils.addIfNotNull
 import org.jetbrains.kotlin.utils.addToStdlib.safeAs
 import org.jetbrains.org.objectweb.asm.MethodVisitor
 import org.jetbrains.org.objectweb.asm.Opcodes
@@ -380,22 +380,9 @@ internal fun getSignature(
             sw.writeInterface()
             val jvmInterfaceType = typeMapper.mapSupertype(superType, sw)
             sw.writeInterfaceEnd()
-            val jvmInterfaceInternalName = jvmInterfaceType.internalName
 
-            superInterfaces.add(jvmInterfaceInternalName)
-
-            val kotlinMarkerInterfaceInternalName = KOTLIN_MARKER_INTERFACES.get(kotlinInterfaceName)
-            if (kotlinMarkerInterfaceInternalName != null) {
-                if (typeMapper.classBuilderMode === ClassBuilderMode.LIGHT_CLASSES) {
-                    sw.writeInterface()
-                    val kotlinCollectionType =
-                        typeMapper.mapType(superClass.defaultType, TypeMappingMode.SUPER_TYPE_KOTLIN_COLLECTIONS_AS_IS, sw)
-                    sw.writeInterfaceEnd()
-                    superInterfaces.add(kotlinCollectionType.internalName)
-                }
-
-                kotlinMarkerInterfaces.add(kotlinMarkerInterfaceInternalName)
-            }
+            superInterfaces.add(jvmInterfaceType.internalName)
+            kotlinMarkerInterfaces.addIfNotNull(KOTLIN_MARKER_INTERFACES[kotlinInterfaceName])
         }
     }
 
